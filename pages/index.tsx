@@ -1,117 +1,103 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import DropdownMenu from '@/components/dropdown-menu';
+import AlertDialog from '@/components/alert-dialog';
+import Dialog from '@/components/dialog';
+import HoverCard from '@/components/hover-card';
 
-const inter = Inter({ subsets: ['latin'] })
+import {
+  CropIcon,
+  FileIcon,
+  FrameIcon,
+  MixerHorizontalIcon,
+  PersonIcon,
+} from '@radix-ui/react-icons';
+
+import { Inter } from 'next/font/google';
+const inter = Inter({ subsets: ['latin'] });
+
+const TailwindLogo = () => (
+  <svg
+    className='h-7 w-7 shrink-0'
+    viewBox='0 0 99 59'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <path
+      d='M49.388 0c-13.171 0-21.4 6.546-24.695 19.637 4.94-6.545 10.701-9 17.286-7.364 3.757.933 6.443 3.643 9.414 6.643C56.236 23.8 61.84 29.454 74.08 29.454c13.169 0 21.4-6.546 24.693-19.635-4.938 6.545-10.7 9-17.284 7.362-3.759-.933-6.445-3.642-9.416-6.64C67.23 5.65 61.627 0 49.387 0ZM24.693 29.454C11.523 29.454 3.293 36 0 49.092c4.94-6.546 10.701-9 17.284-7.365 3.759.933 6.445 3.643 9.416 6.643 4.843 4.885 10.446 10.538 22.688 10.538 13.169 0 21.4-6.544 24.693-19.635-4.94 6.546-10.702 9-17.286 7.364-3.757-.934-6.443-3.644-9.414-6.642-4.843-4.885-10.448-10.54-22.688-10.54Z'
+      fill='#38BDF8'
+    />
+  </svg>
+);
 
 export default function Home() {
   return (
     <main
       className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
     >
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">pages/index.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+      <div className='mt-4 flex w-full flex-col items-center gap-y-20'>
+        <h1 className='text-5xl font-bold text-slate-200'>Howdy!</h1>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+        <DropdownMenu
+          onSelect={label => console.log(label)}
+          generalMenuItems={[
+            {
+              label: 'New File',
+              icon: <FileIcon className='mr-2 h-3.5 w-3.5' />,
+              shortcut: '⌘+N',
+            },
+            {
+              label: 'Settings',
+              icon: <MixerHorizontalIcon className='mr-2 h-3.5 w-3.5' />,
+              shortcut: '⌘+,',
+            },
+          ]}
+          regionToolMenuItems={[
+            {
+              label: 'Frame',
+              icon: <FrameIcon className='mr-2 h-3.5 w-3.5' />,
+              shortcut: '⌘+F',
+            },
+            {
+              label: 'Crop',
+              icon: <CropIcon className='mr-2 h-3.5 w-3.5' />,
+              shortcut: '⌘+S',
+            },
+          ]}
+          users={[
+            {
+              name: 'Adam',
+              url: 'https://github.com/adamwathan.png',
+            },
+            {
+              name: 'Steve',
+              url: 'https://github.com/steveschoger.png',
+            },
+            {
+              name: 'Robin',
+              url: 'https://github.com/robinmalfait.png',
+            },
+          ]}
+        >Click</DropdownMenu>
+
+        <AlertDialog
+          data={{
+            title: 'Are you absolutely sure?',
+            desc: `This action cannot be undone. This will permanently delete your
+                  account and remove your data from our servers.`,
+            onCancel: () => console.log('Canceled!!!'),
+            onConfirm: () => console.log('Confirmed!!!'),
+          }}
+        >Click</AlertDialog>
+
+        <Dialog onCancel={() => console.log('Name check canceled')}>
+          Click
+        </Dialog>
+
+        <HoverCard
+          icon={<TailwindLogo />}
+          title='Tailwind CSS'
+          desc={`A utility-first CSS framework for rapidly building custom user
+                interfaces.`}
         />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
       </div>
     </main>
   )
